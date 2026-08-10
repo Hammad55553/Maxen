@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Maxen Lubes - Premium International Brand</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #f26522; /* Orange for oil/engine */
+            --primary-glow: rgba(242, 101, 34, 0.5);
+            --dark: #0a0a0a;
+            --gray: #1a1a1a;
+            --text-light: #f5f5f5;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Outfit', sans-serif;
+        }
+
+        body {
+            background-color: var(--dark);
+            color: var(--text-light);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Background effects */
+        .bg-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(10,10,10,0.92) 0%, rgba(26,26,26,0.95) 100%),
+                        url('https://images.unsplash.com/photo-1610647752706-3bb12232b3ab?q=80&w=2000&auto=format&fit=crop') no-repeat center center/cover;
+            z-index: -1;
+            animation: fadeIn 2s ease-in;
+        }
+
+        .glow {
+            position: fixed;
+            width: 400px;
+            height: 400px;
+            background: var(--primary);
+            border-radius: 50%;
+            filter: blur(150px);
+            opacity: 0.15;
+            top: -100px;
+            right: -100px;
+            animation: float 8s infinite ease-in-out alternate;
+            z-index: -1;
+        }
+
+        .glow-2 {
+            position: fixed;
+            width: 300px;
+            height: 300px;
+            background: #ff9d00;
+            border-radius: 50%;
+            filter: blur(150px);
+            opacity: 0.1;
+            bottom: -50px;
+            left: -50px;
+            animation: float 6s infinite ease-in-out alternate-reverse;
+            z-index: -1;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            flex: 1;
+            text-align: center;
+        }
+
+        .badge {
+            background: rgba(242, 101, 34, 0.1);
+            border: 1px solid var(--primary);
+            color: var(--primary);
+            padding: 8px 20px;
+            border-radius: 30px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 2rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 0 15px var(--primary-glow);
+        }
+
+        .logo {
+            font-size: 3.5rem;
+            font-weight: 800;
+            color: white;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo span {
+            color: var(--primary);
+        }
+
+        .icon-oil {
+            width: 45px;
+            height: 45px;
+            background: linear-gradient(135deg, #ff9d00, var(--primary));
+            border-radius: 0 50% 50% 50%;
+            transform: rotate(45deg);
+            display: inline-block;
+            box-shadow: -2px 2px 10px rgba(242, 101, 34, 0.5);
+        }
+
+        .title {
+            font-size: clamp(2.5rem, 6vw, 5.5rem);
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(to right, #ffffff, #a0a0a0);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            color: #b0b0b0;
+            max-width: 650px;
+            margin-bottom: 3rem;
+            line-height: 1.6;
+        }
+
+        /* Features */
+        .features {
+            display: flex;
+            gap: 2rem;
+            margin-bottom: 4rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .feature-box {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 1.5rem 2rem;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            backdrop-filter: blur(10px);
+            transition: transform 0.3s ease, border-color 0.3s ease;
+        }
+
+        .feature-box:hover {
+            transform: translateY(-5px);
+            border-color: rgba(242, 101, 34, 0.3);
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .feature-box i {
+            color: var(--primary);
+            font-size: 1.8rem;
+        }
+
+        .feature-text {
+            text-align: left;
+        }
+
+        .feature-text h5 {
+            font-size: 1.1rem;
+            margin-bottom: 5px;
+        }
+
+        .feature-text p {
+            font-size: 0.85rem;
+            color: #888;
+        }
+
+        /* Contact Section */
+        .contact-info {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 2.5rem;
+            border-radius: 20px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 3rem;
+            justify-content: center;
+            margin-bottom: 4rem;
+            width: 100%;
+            max-width: 900px;
+        }
+
+        .contact-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .contact-item i {
+            font-size: 2rem;
+            color: var(--primary);
+            margin-bottom: 5px;
+        }
+
+        .contact-item h4 {
+            color: #fff;
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .contact-item p {
+            font-size: 1.2rem;
+            font-weight: 400;
+            color: #ddd;
+        }
+        
+        .contact-item a {
+            color: #ddd;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .contact-item a:hover {
+            color: var(--primary);
+        }
+
+        /* Newsletter */
+        .newsletter {
+            margin-bottom: 3rem;
+            width: 100%;
+            max-width: 500px;
+        }
+
+        .newsletter h3 {
+            margin-bottom: 1rem;
+            font-weight: 400;
+        }
+
+        .subscribe-form {
+            display: flex;
+            gap: 10px;
+        }
+
+        .subscribe-form input {
+            flex: 1;
+            padding: 15px 20px;
+            border-radius: 30px;
+            border: 1px solid rgba(255,255,255,0.2);
+            background: rgba(0,0,0,0.5);
+            color: white;
+            font-size: 1rem;
+            outline: none;
+            transition: border-color 0.3s ease;
+        }
+
+        .subscribe-form input:focus {
+            border-color: var(--primary);
+        }
+
+        .subscribe-form button {
+            padding: 15px 30px;
+            border-radius: 30px;
+            border: none;
+            background: var(--primary);
+            color: white;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background 0.3s ease, transform 0.3s ease;
+        }
+
+        .subscribe-form button:hover {
+            background: #e05512;
+            transform: scale(1.05);
+        }
+
+        /* Footer */
+        .footer {
+            padding: 2rem;
+            text-align: center;
+            background: rgba(0,0,0,0.8);
+            backdrop-filter: blur(10px);
+            border-top: 1px solid rgba(255,255,255,0.05);
+            width: 100%;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 1.5rem;
+        }
+
+        .social-links a {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.05);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .social-links a:hover {
+            background: var(--primary);
+            border-color: var(--primary);
+            transform: translateY(-3px);
+        }
+
+        .footer p {
+            font-size: 0.95rem;
+            color: #888;
+            margin: 5px 0;
+        }
+
+        .developer {
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0) scale(1); }
+            100% { transform: translateY(-30px) scale(1.1); }
+        }
+
+        .slide-up {
+            animation: slideUp 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            opacity: 0;
+            transform: translateY(40px);
+        }
+
+        .delay-1 { animation-delay: 0.2s; }
+        .delay-2 { animation-delay: 0.4s; }
+        .delay-3 { animation-delay: 0.6s; }
+        .delay-4 { animation-delay: 0.8s; }
+        .delay-5 { animation-delay: 1.0s; }
+
+        @keyframes slideUp {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Responsive - Tablets & Mobile */
+        @media (max-width: 992px) {
+            .container { padding: 3rem 1.5rem; }
+            .features { gap: 1.5rem; }
+            .contact-info { padding: 2rem; gap: 2rem; }
+        }
+
+        @media (max-width: 768px) {
+            .contact-info { flex-direction: column; gap: 2rem; padding: 1.5rem; }
+            .features { flex-direction: column; width: 100%; max-width: 400px; }
+            .feature-box { width: 100%; justify-content: flex-start; }
+            .subscribe-form { flex-direction: column; }
+            .subscribe-form button { width: 100%; }
+            .logo { font-size: 2.8rem; }
+            .icon-oil { width: 35px; height: 35px; }
+        }
+
+        /* Mobile specific adjustments */
+        @media (max-width: 480px) {
+            .container { padding: 2rem 1rem; }
+            .badge { font-size: 0.75rem; padding: 6px 15px; margin-bottom: 1.5rem; }
+            .logo { font-size: 2.2rem; flex-wrap: wrap; justify-content: center; text-align: center; }
+            .title { font-size: 2.2rem; margin-bottom: 1rem; }
+            .subtitle { font-size: 1rem; margin-bottom: 2.5rem; }
+            .contact-info { gap: 1.5rem; }
+            .contact-item h4 { font-size: 0.9rem; }
+            .contact-item p { font-size: 1rem; }
+            .footer { padding: 1.5rem 1rem; }
+            .footer p { font-size: 0.85rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="bg-overlay"></div>
+    <div class="glow"></div>
+    <div class="glow-2"></div>
+
+    <div class="container">
+        
+        <div class="badge slide-up">
+            <i class="fas fa-globe"></i> Premium International Brand
+        </div>
+
+        <div class="logo slide-up delay-1">
+            <div class="icon-oil"></div>
+            Maxen<span>Lubes</span>
+        </div>
+        
+        <h1 class="title slide-up delay-2">Website Under Construction</h1>
+        
+        <p class="subtitle slide-up delay-3">
+            Get ready for a revolutionized experience. Maxen Lubes, a globally trusted international brand, is bringing you an enhanced online platform for our world-class engine oils and lubricants.
+        </p>
+
+        <div class="features slide-up delay-4">
+            <div class="feature-box">
+                <i class="fas fa-oil-can"></i>
+                <div class="feature-text">
+                    <h5>Advanced Formula</h5>
+                    <p>Maximum Engine Protection</p>
+                </div>
+            </div>
+            <div class="feature-box">
+                <i class="fas fa-shield-alt"></i>
+                <div class="feature-text">
+                    <h5>Global Standard</h5>
+                    <p>Trusted Worldwide</p>
+                </div>
+            </div>
+            <div class="feature-box">
+                <i class="fas fa-leaf"></i>
+                <div class="feature-text">
+                    <h5>Eco-Friendly</h5>
+                    <p>Reduced Emissions</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="contact-info slide-up delay-5">
+            <div class="contact-item">
+                <i class="fas fa-envelope-open-text"></i>
+                <h4>Email Support</h4>
+                <p><a href="mailto:lubesmaxen@gmail.com">lubesmaxen@gmail.com</a></p>
+            </div>
+            <div class="contact-item">
+                <i class="fas fa-headset"></i>
+                <h4>Call Us Now</h4>
+                <p><a href="tel:+923273222235">+92 327 3222235</a></p>
+            </div>
+            <div class="contact-item">
+                <i class="fas fa-map-marked-alt"></i>
+                <h4>Global Reach</h4>
+                <p>International</p>
+            </div>
+        </div>
+
+    </div>
+
+    <footer class="footer">
+        <p>&copy; 2026 Maxen Lubes - Premium International Brand. All Rights Reserved.</p>
+        <p style="margin-top: 5px;">Designed & Developed by <span class="developer">Asper InfoTech Private Limited</span></p>
+    </footer>
+
+</body>
+</html>
